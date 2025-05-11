@@ -1,0 +1,1 @@
+add_subdirectory_ifdef(CONFIG_TMP102 tmp102)

@@ -1,0 +1,7 @@
+config TMP102
+    bool "TMP102 Temperature Sensor"
+    default y
+    depends on DT_HAS_TI_TMP102_ENABLED
+    select I2C
+    help 
+        Custom TMP102 driver without reliance on TMP112 driver.

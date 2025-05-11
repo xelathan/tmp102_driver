@@ -1,0 +1,13 @@
+/ {
+    aliases {
+        tmp-sensor = &tmp102;
+    };
+};
+
+&i2c1 {
+    tmp102: tmp102@48 {
+        compatible = "ti,tmp102";
+        reg = <0x48>;
+        label = "TMP_SENSOR";
+    };
+};
