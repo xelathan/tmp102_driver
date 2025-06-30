@@ -6,27 +6,31 @@
     aliases {
         tmp-sensor = &tmp102;
         apds-sensor = &apds9960;
+        spi-2 = &spi2;
     };
 };
 
-&i2c1 {
+&i2c0 {    
     tmp102: tmp102@48 {
+        status = "okay";
         compatible = "ti,tmp102";
         reg = <0x48>;
         label = "TMP_SENSOR";
     };
-
+    
     apds9960: apds9960@39 {
-		status = "okay";
-		compatible = "avago,apds9960";
-		reg = <0x39>;
-	};
+        status = "okay";
+        compatible = "avago,apds9960";
+        reg = <0x39>;
+        label = "APDS_SENSOR";
+    };
 };
 
-&spi1 {
+&spi2 {
     status = "okay";
+    pinctrl-0 = <&spim2_custom>;
 
-    oled: ssd1306@0 {
+     oled: ssd1306@0 {
         compatible = "solomon,ssd1306fb";
         reg = <0x0>;
         spi-max-frequency = <8000000>;
@@ -38,10 +42,24 @@
 		multiplex-ratio = <63>;
         prechargep = <0x22>;
         segment-remap;
-        com-invdir;
-        inversion-on;
-        data-cmd-gpios = <&gpioa 10 GPIO_ACTIVE_HIGH>;
-        reset-gpios = <&gpiob 3 GPIO_ACTIVE_LOW>;
+        // com-invdir;
+        // inversion-on;
+        data-cmd-gpios = <&gpio0 27 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;
         // ready-time-ms = <100>;  /* SH1106G needs 100ms delay after init */
     };
+};
+
+&pinctrl {
+    spim2_custom: spim2_custom {
+		group1 {
+			pinmux = <SPIM2_MISO_GPIO19>,
+				 <SPIM2_SCLK_GPIO18>,
+				 <SPIM2_CSEL_GPIO5>;
+		};
+		group2 {
+			pinmux = <SPIM2_MOSI_GPIO23>;
+			output-low;
+		};
+	};
 };
