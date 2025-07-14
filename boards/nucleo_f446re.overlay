@@ -10,9 +10,11 @@
 };
 
 &i2c1 {
-    tmp102: tmp102@48 {
+    status = "okay";
+
+    tmp102: tmp102@49 {
         compatible = "ti,tmp102";
-        reg = <0x48>;
+        reg = <0x49>;
         label = "TMP_SENSOR";
     };
 
@@ -40,8 +42,12 @@
         segment-remap;
         com-invdir;
         inversion-on;
-        data-cmd-gpios = <&gpioa 10 GPIO_ACTIVE_HIGH>;
+        data-cmd-gpios = <&gpioa 8 GPIO_ACTIVE_HIGH>;
         reset-gpios = <&gpiob 3 GPIO_ACTIVE_LOW>;
         // ready-time-ms = <100>;  /* SH1106G needs 100ms delay after init */
     };
+};
+
+&usart1{
+    current-speed = <9600>;
 };

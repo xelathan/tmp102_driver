@@ -6,29 +6,12 @@
 
 #include <lvgl.h>
 #include <string.h>
-
-#define TMP102_NODE DT_ALIAS(tmp_sensor)
-#define APDS9960_NODE DT_ALIAS(apds_sensor)
-
-/**
- * Threads
- */
-#define TMP102_THREAD_STACK_SIZE 1024
-#define APDS9960_THREAD_STACK_SIZE 1024
-#define TMP_OUTPUT_THREAD_STACK_SIZE 1024
-#define LIGHT_INTENSITY_THREAD_STACK_SIZE 1024
-
-#define TMP102_THREAD_SLEEP_MS 500
-#define APDS9960_THREAD_SLEEP_MS 500
-
-#define MAIN_SLEEP_MS 50
+#include <app_config.h>
 
 K_THREAD_STACK_DEFINE(tmp102_stack, TMP102_THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(tmp_output_stack, TMP_OUTPUT_THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(apds9960_stack, APDS9960_THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(light_intensity_stack, LIGHT_INTENSITY_THREAD_STACK_SIZE);
-
-#define MSGQ_SIZE 1
 
 K_MSGQ_DEFINE(apds_msg_queue, sizeof(struct sensor_value), MSGQ_SIZE, 1);
 K_MSGQ_DEFINE(tmp_msg_queue, sizeof(struct sensor_value), MSGQ_SIZE, 1);
